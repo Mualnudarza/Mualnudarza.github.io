@@ -90,9 +90,9 @@ Semua konten teks telah disesuaikan dari template Kage ke profil portfolio Busin
 
 ## 7. Chapter IV — Collaboration / Closing CTA (`#eternity`)
 - **Eyebrow**: `Chapter 04 — Collaboration`
-- **Heading**: `Let’s Build Better Solutions`
-- **Deskripsi**: `Open for collaboration, business analysis roles, and digital transformation initiatives. Let's connect and discuss how we can turn your business needs into impactful results.`
-- **Action Button**: `Let’s Build Better Solutions` (`mailto:darwanzaalif@gmail.com`)
+- **Heading**: `Let’s Connect`
+- **Body**: `Open for collaboration, business analysis roles, and digital transformation initiatives. Let's discuss how we can turn your business needs into impactful results.`
+- **CTA Button**: `Get in Touch` (`mailto:darwanzaalif@gmail.com`)
 
 ---
 

@@ -12,5 +12,15 @@ export type { LandingPageProps } from "../shaders/landing-pages/LandingPageFrame
 export function KageLandingPage(props: LandingPageProps & PageTypographyProps) {
   const [type, frame] = splitTypographyProps(props);
   const customization = usePageTypography(KAGE_TYPOGRAPHY, type);
-  return <LandingPageFrame {...frame} customization={customization} title="Muhammad Alif Nur Darwanza — Business Analyst" sourceUrl="/landing-pages/kage.html" />;
+  const baseUrl = import.meta.env.BASE_URL.endsWith('/')
+    ? import.meta.env.BASE_URL
+    : `${import.meta.env.BASE_URL}/`;
+  return (
+    <LandingPageFrame
+      {...frame}
+      customization={customization}
+      title="Muhammad Alif Nur Darwanza — Business Analyst"
+      sourceUrl={`${baseUrl}landing-pages/kage.html`}
+    />
+  );
 }
