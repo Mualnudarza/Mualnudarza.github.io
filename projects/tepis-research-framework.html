@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEPIS Research Framework — NAREKA</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --dot-color: #cbd5e1;
+      --card-bg: #ffffff;
+      --card-border: #18181b;
+      --shadow-color: #18181b;
+      --yellow-main: #facc15;
+      --yellow-sub: #fef08a;
+      --blue-accent: #2563eb;
+      --blue-light: #eff6ff;
+      --green-accent: #16a34a;
+      --green-light: #f0fdf4;
+      --red-accent: #dc2626;
+      --red-light: #fef2f2;
+      --text-main: #09090b;
+      --text-muted: #52525b;
+      --border: #e4e4e7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--dot-color) 1.2px, transparent 1.2px);
+      background-size: 20px 20px;
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    /* Top Navigation (NAREKA Style) */
+    header.nav {
+      height: 56px;
+      background: #ffffff;
+      border-bottom: 1.5px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-badge {
+      background: var(--card-border);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1.5px solid var(--card-border);
+      background: #ffffff;
+      color: var(--text-main);
+      text-decoration: none;
+      box-shadow: 2px 2px 0px var(--shadow-color);
+      transition: all 0.1s ease;
+    }
+
+    .nav-pill:hover {
+      background: var(--yellow-main);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--shadow-color);
+    }
+
+    /* Page Layout */
+    .container {
+      max-width: 860px;
+      margin: 32px auto 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Neo-Brutalist Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 10px;
+      padding: 22px;
+      box-shadow: 4px 4px 0px var(--shadow-color);
+    }
+
+    .hero-card {
+      background: #ffffff;
+      border: 2px solid var(--card-border);
+      padding: 28px;
+      box-shadow: 5px 5px 0px var(--shadow-color);
+      border-radius: 12px;
+    }
+
+    .badge-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1.5px solid var(--card-border);
+      background: var(--yellow-main);
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Visual 5 Steps Bar */
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .steps-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .step-item {
+      background: #fafafa;
+      border: 1.5px solid var(--card-border);
+      border-radius: 6px;
+      padding: 10px;
+      box-shadow: 2px 2px 0px var(--shadow-color);
+    }
+
+    .step-item.highlight {
+      background: var(--yellow-sub);
+    }
+
+    .step-tag {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .step-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+
+    .step-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    /* Comparison Table Simple */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .compare-table th, .compare-table td {
+      border: 1.5px solid var(--card-border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    .compare-table th {
+      background: #f4f4f5;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .compare-table td.tepis-cell {
+      background: #fefce8;
+      font-weight: 600;
+    }
+
+    /* Akronim Cards Grid */
+    .akronim-card {
+      background: #ffffff;
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 3px 3px 0px var(--shadow-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .akronim-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .akronim-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1.5px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 16px;
+      background: var(--yellow-main);
+      box-shadow: 1.5px 1.5px 0px var(--shadow-color);
+    }
+
+    .akronim-title {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .akronim-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .akronim-content {
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .akronim-box-action {
+      background: #f4f4f5;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .akronim-box-action strong {
+      display: block;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    /* Case Study Simple Steps */
+    .case-flow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 640px) {
+      .case-flow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .case-box {
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 12px;
+      background: #ffffff;
+      box-shadow: 2px 2px 0px var(--shadow-color);
+    }
+
+    .case-box h4 {
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* PMI Simple Deck */
+    .pmi-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .pmi-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pmi-box {
+      border: 1.5px solid var(--card-border);
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 12px;
+      box-shadow: 2px 2px 0px var(--shadow-color);
+    }
+
+    .pmi-box.plus { background: var(--green-light); }
+    .pmi-box.minus { background: var(--red-light); }
+    .pmi-box.interesting { background: var(--yellow-sub); }
+
+    .pmi-title {
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    /* Solution Box */
+    .solution-banner {
+      background: #f5f3ff;
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      box-shadow: 3px 3px 0px var(--shadow-color);
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .rule-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .rule-num {
+      width: 20px;
+      height: 20px;
+      background: var(--card-border);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Simple Footer */
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar (NAREKA Style) -->
+  <header class="nav">
+    <div class="brand-group">
+      <span class="brand-badge">NAREKA</span>
+      <span class="brand-title">TEPIS Research Framework</span>
+    </div>
+    <div class="nav-links">
+      <a href="#beda-epis" class="nav-pill">Beda EPIS</a>
+      <a href="#akronim" class="nav-pill">5 Fase</a>
+      <a href="#contoh" class="nav-pill">Contoh Nyata</a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero Card -->
+    <section class="hero-card">
+      <span class="badge-label">Kerangka Riset Mandiri</span>
+      <h1>TEPIS: Cara Memeras Kemampuan Alat Sampai Maksimal</h1>
+      <p class="hero-desc">
+        Pola berpikir sederhana: ambil satu alat, cek batas amannya, paksa bekerja sampai jebol, catat hasilnya, lalu kawinkan dengan alat lain agar jadi solusi yang tahan banting.
+      </p>
+
+      <!-- 5 Langkah Praktis Strip -->
+      <div class="steps-row">
+        <div class="step-item">
+          <div class="step-tag">FASE 1</div>
+          <div class="step-name">[T] Things</div>
+          <div class="step-sub">Pilih 1 alat tanpa termakan iklan.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-tag">FASE 2</div>
+          <div class="step-name">[E] Explore</div>
+          <div class="step-sub">Cari tahu batas wajarnya.</div>
+        </div>
+        <div class="step-item highlight">
+          <div class="step-tag">FASE 3</div>
+          <div class="step-name">[P] Peak Stress</div>
+          <div class="step-sub">Uji beban ekstrem sampai rusak.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-tag">FASE 4</div>
+          <div class="step-name">[I] Insight</div>
+          <div class="step-sub">Catat plus, minus, & keunikannya.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-tag">FASE 5</div>
+          <div class="step-name">[S] Synthesis</div>
+          <div class="step-sub">Gabungkan 2 alat saling menambal.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Perbedaan Singkat: EPIS vs TEPIS -->
+    <section id="beda-epis" class="card">
+      <h2>1. Dari Mana Asalnya? (Beda EPIS vs TEPIS)</h2>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
+        EPIS asli dipakai di instansi pemerintah/kesehatan untuk melatih orang agar mau pakai sistem baru. TEPIS dimodifikasi untuk kita yang ingin memeras alat kerja sampai batas atas.
+      </p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Bagian</th>
+            <th>EPIS Biasa (Gaya Kantor)</th>
+            <th>TEPIS (Gaya Eksperimen)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tujuan</strong></td>
+            <td>Supaya staf mau pakai dan tidak mogok.</td>
+            <td class="tepis-cell">Supaya tahu batas kemampuan maksimal alat.</td>
+          </tr>
+          <tr>
+            <td><strong>Huruf P</strong></td>
+            <td><strong>Preparation:</strong> Siapkan dana dan rapat.</td>
+            <td class="tepis-cell"><strong>Peak Stress:</strong> Paksa alat sampai macet/rusak.</td>
+          </tr>
+          <tr>
+            <td><strong>Huruf I</strong></td>
+            <td><strong>Implementation:</strong> Peluncuran jadwal kerja.</td>
+            <td class="tepis-cell"><strong>Insight:</strong> Catat plus, minus, dan celahnya.</td>
+          </tr>
+          <tr>
+            <td><strong>Huruf S</strong></td>
+            <td><strong>Sustainment:</strong> Menjaga sistem tetap dipakai.</td>
+            <td class="tepis-cell"><strong>Synthesis:</strong> Gabung 2 alat agar makin kuat.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 2. Penjelasan Singkat Akronim TEPIS -->
+    <section id="akronim" class="card">
+      <h2>2. Penjelasan 5 Huruf TEPIS</h2>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+        Gunakan 5 langkah ini secara berurutan pada alat apa pun:
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:14px;">
+
+        <!-- T -->
+        <div class="akronim-card">
+          <div class="akronim-header">
+            <div class="akronim-letter">T</div>
+            <div>
+              <div class="akronim-title">Things (Pilih & Isolasi Alat)</div>
+              <div class="akronim-sub">Lihat fungsi murninya tanpa percaya klaim iklan</div>
+            </div>
+          </div>
+          <div class="akronim-content">
+            Pilih 1 software, rumus, aplikasi, atau konsep. Jangan pasang plugin tambahan dulu. Uji apa adanya dalam kondisi polos.
+          </div>
+          <div class="akronim-box-action">
+            <strong>Pertanyaan sederhana:</strong> "Alat ini sebenarnya dipakai untuk apa, dan masukan apa yang diolahnya?"
+          </div>
+        </div>
+
+        <!-- E -->
+        <div class="akronim-card">
+          <div class="akronim-header">
+            <div class="akronim-letter">E</div>
+            <div>
+              <div class="akronim-title">Exploration (Cek Batas Aman)</div>
+              <div class="akronim-sub">Ketahui kapan alat cocok dan kapan salah tempat</div>
+            </div>
+          </div>
+          <div class="akronim-content">
+            Cek syarat minimal (spek HP/laptop, format data). Tentukan zona aman pemakaian dan kasus di mana alat jelas tidak cocok dipaksakan.
+          </div>
+          <div class="akronim-box-action">
+            <strong>Pertanyaan sederhana:</strong> "Kapan alat ini lancar dipakai, dan kapan tidak boleh dipaksakan?"
+          </div>
+        </div>
+
+        <!-- P -->
+        <div class="akronim-card">
+          <div class="akronim-header">
+            <div class="akronim-letter">P</div>
+            <div>
+              <div class="akronim-title">Peak Stress-Test (Paksa Sampai Rusak)</div>
+              <div class="akronim-sub">Uji sendiri tanpa bantuan alat lain</div>
+            </div>
+          </div>
+          <div class="akronim-content">
+            Beri beban 10x lipat (data ribuan, buka puluhan tab, input cepat tanpa jeda). Jangan ditolong dulu. Cari dua angka: kapan mulai lemot (Ceiling) dan kapan macet total (Breaking Point).
+          </div>
+          <div class="akronim-box-action">
+            <strong>Pertanyaan sederhana:</strong> "Seberapa banyak beban yang bisa ditahan sebelum alat ini mulai ngelag atau error?"
+          </div>
+        </div>
+
+        <!-- I -->
+        <div class="akronim-card">
+          <div class="akronim-header">
+            <div class="akronim-letter">I</div>
+            <div>
+              <div class="akronim-title">Insight & PMI (Catat Hasil Uji)</div>
+              <div class="akronim-sub">Audit jujur: Plus, Minus, dan Hal Menarik</div>
+            </div>
+          </div>
+          <div class="akronim-content">
+            Kelompokkan hasil pengujian ke 3 catatan:
+            <ul style="margin-top:6px; padding-left:18px; line-height:1.6;">
+              <li><strong>Plus (+):</strong> Bagian apa yang terbukti tetap kuat dan cepat?</li>
+              <li><strong>Minus (-):</strong> Bagian apa yang bikin lemot, boros biaya, atau mudah salah?</li>
+              <li><strong>Interesting (?):</strong> Hal unik apa di luar dugaan yang ternyata berguna?</li>
+            </ul>
+          </div>
+          <div class="akronim-box-action">
+            <strong>Pertanyaan sederhana:</strong> "Apa repotnya pakai alat ini, dan potensi tersembunyi apa yang terlihat?"
+          </div>
+        </div>
+
+        <!-- S -->
+        <div class="akronim-card">
+          <div class="akronim-header">
+            <div class="akronim-letter">S</div>
+            <div>
+              <div class="akronim-title">Synthesis (Kawin Silang 2 Alat)</div>
+              <div class="akronim-sub">Jangan buang alatnya, tutupi kekurangannya</div>
+            </div>
+          </div>
+          <div class="akronim-content">
+            Jangan buang alat A hanya karena ada minus. Ambil alat B yang punya kelebihan di titik lemah alat A. Gabungkan keduanya agar menjadi satu sistem yang kokoh.
+          </div>
+          <div class="akronim-box-action">
+            <strong>Pertanyaan sederhana:</strong> "Alat kedua apa yang bisa dipasang untuk menambal kelemahan alat pertama?"
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. Contoh Nyata yang Mudah Dipahami -->
+    <section id="contoh" class="card">
+      <h2>3. Contoh Nyata: Spreadsheet (Excel / Google Sheets)</h2>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+        Kasus umum: Excel atau Google Sheets yang sering dipaksa jadi pencatat stok dan transaksi toko.
+      </p>
+
+      <div class="case-flow">
+        <div class="case-box">
+          <h4>[T] Objek Alat</h4>
+          Google Sheets polos untuk mencatat keluar-masuk barang tanpa aplikasi tambahan.
+        </div>
+        <div class="case-box">
+          <h4>[E] Batas Wajar</h4>
+          Bagus untuk di bawah 1.000 barang dan dipakai oleh 1 sampai 3 orang saja.
+        </div>
+      </div>
+
+      <!-- Hasil Uji Beban P -->
+      <div style="margin-top:14px; border:1.5px solid var(--card-border); border-radius:8px; padding:12px; background:#fafafa;">
+        <div style="font-size:12px; font-weight:800; margin-bottom:6px;">[P] Hasil Dites Beban Berat:</div>
+        <ul style="font-size:12px; line-height:1.6; padding-left:16px; color:var(--text-main);">
+          <li><strong>4.000 baris:</strong> Masih lancar tanpa masalah (Batas aman).</li>
+          <li><strong>10.000 baris:</strong> Mulai lemot, ketik terasa ada jeda 2 detik.</li>
+          <li><strong>20.000 baris & 10 staf buka bareng:</strong> Lembar kerja macet, data saling timpa, rumus rusak (#REF!).</li>
+        </ul>
+      </div>
+
+      <!-- Evaluasi PMI I -->
+      <div class="pmi-row">
+        <div class="pmi-box plus">
+          <div class="pmi-title text-green-700">[+] Plus</div>
+          Gratis, gampang dipakai semua staf, grafik laporan bisa dibuat cepat.
+        </div>
+        <div class="pmi-box minus">
+          <div class="pmi-title text-red-700">[-] Minus</div>
+          Rumus mudah terhapus staf lain, lemot kalau data banyak.
+        </div>
+        <div class="pmi-box interesting">
+          <div class="pmi-title text-yellow-800">[?] Menarik</div>
+          Pivot Table otomatis bisa gantikan laporan mingguan tanpa ribet.
+        </div>
+      </div>
+
+      <!-- Solusi Gabungan S -->
+      <div class="solution-banner">
+        <div style="font-weight:800; font-size:13px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+          <span>[S] Solusi Kawin Silang:</span>
+          <span>Google Sheets + Formulir Digital (Google Forms)</span>
+        </div>
+        <p style="font-size:12px; color:var(--text-main); line-height:1.5;">
+          <strong>Caranya:</strong> Staf dilarang edit sel Excel langsung. Staf wajib isi data lewat <strong>Google Form</strong> (kolom angka dikunci, pilihan menu drop-down). Excel dikunci hanya untuk melihat grafik pimpinan.
+          <br>
+          <em>Hasil: Data tidak pernah salah ketik atau hilang rumus, dan pimpinan tetap dapat kemudahan grafik.</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Prinsip Inti -->
+    <section class="card">
+      <h2>4. Tiga Kaidah Singkat TEPIS</h2>
+      <ul class="rule-list">
+        <li class="rule-item">
+          <div class="rule-num">1</div>
+          <div><strong>Uji sendiri dulu:</strong> Jangan buru-buru gabungkan alat sebelum tahu kapan alat itu mulai ngelag.</div>
+        </li>
+        <li class="rule-item">
+          <div class="rule-num">2</div>
+          <div><strong>Minus bukan berarti jelek:</strong> Minus adalah petunjuk untuk mencari alat pasangan yang pas.</div>
+        </li>
+        <li class="rule-item">
+          <div class="rule-num">3</div>
+          <div><strong>Gabung untuk menambal:</strong> Solusi terbaik bukan cari 1 alat dewa, tapi gabungkan 2 alat sederhana yang saling menutup celah.</div>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    NAREKA • TEPIS Research Framework • <code>E:\WORKSPACE\PROJECT\WEB-APPS\NAREKA\projects\tepis-research-framework.html</code>
+  </footer>
+
+</body>
+</html>
