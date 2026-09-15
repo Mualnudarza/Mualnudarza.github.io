@@ -11,14 +11,20 @@
       --card-bg: #ffffff;
       --card-border: #18181b;
       --shadow-color: #18181b;
-      --yellow-main: #facc15;
-      --yellow-sub: #fef08a;
-      --blue-accent: #2563eb;
-      --blue-light: #eff6ff;
-      --green-accent: #16a34a;
-      --green-light: #f0fdf4;
-      --red-accent: #dc2626;
-      --red-light: #fef2f2;
+
+      /* Konsisten 3 Warna Utama (Kuning NAREKA, Biru Cobalt, Merah Koral) */
+      --c-yellow: #facc15;
+      --c-yellow-light: #fefce8;
+      --c-yellow-border: #ca8a04;
+
+      --c-blue: #2563eb;
+      --c-blue-light: #eff6ff;
+      --c-blue-border: #1d4ed8;
+
+      --c-coral: #e11d48;
+      --c-coral-light: #fff1f2;
+      --c-coral-border: #be123c;
+
       --text-main: #09090b;
       --text-muted: #52525b;
       --border: #e4e4e7;
@@ -40,11 +46,11 @@
       padding-bottom: 60px;
     }
 
-    /* Top Navigation (NAREKA Style) */
+    /* Top Navbar */
     header.nav {
       height: 56px;
       background: #ffffff;
-      border-bottom: 1.5px solid var(--card-border);
+      border-bottom: 2px solid var(--card-border);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -61,9 +67,11 @@
     }
 
     .brand-badge {
-      background: var(--card-border);
-      color: #ffffff;
-      font-weight: 800;
+      background: var(--c-yellow);
+      color: var(--card-border);
+      border: 1.5px solid var(--card-border);
+      box-shadow: 2px 2px 0px var(--shadow-color);
+      font-weight: 900;
       font-size: 12px;
       padding: 3px 8px;
       border-radius: 5px;
@@ -72,7 +80,7 @@
 
     .brand-title {
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-main);
     }
 
@@ -83,7 +91,7 @@
 
     .nav-pill {
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       padding: 4px 12px;
       border-radius: 6px;
       border: 1.5px solid var(--card-border);
@@ -95,50 +103,56 @@
     }
 
     .nav-pill:hover {
-      background: var(--yellow-main);
+      background: var(--c-yellow);
       transform: translate(-1px, -1px);
       box-shadow: 3px 3px 0px var(--shadow-color);
     }
 
-    /* Page Layout */
+    /* Main Container */
     .container {
       max-width: 860px;
       margin: 32px auto 0 auto;
       padding: 0 20px;
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 26px;
     }
 
-    /* Neo-Brutalist Cards */
+    /* Base Card Style */
     .card {
       background: var(--card-bg);
-      border: 1.5px solid var(--card-border);
-      border-radius: 10px;
-      padding: 22px;
+      border: 2px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
       box-shadow: 4px 4px 0px var(--shadow-color);
     }
 
+    /* Hero Card */
     .hero-card {
       background: #ffffff;
       border: 2px solid var(--card-border);
       padding: 28px;
       box-shadow: 5px 5px 0px var(--shadow-color);
       border-radius: 12px;
+      border-top: 6px solid var(--c-yellow);
     }
 
     .badge-label {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 900;
       text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 4px;
+      padding: 3px 10px;
+      border-radius: 5px;
       border: 1.5px solid var(--card-border);
-      background: var(--yellow-main);
-      color: var(--text-main);
+      box-shadow: 2px 2px 0px var(--shadow-color);
       margin-bottom: 12px;
     }
+
+    .badge-yellow { background: var(--c-yellow); color: var(--card-border); }
+    .badge-blue { background: var(--c-blue-light); color: var(--c-blue-border); }
+    .badge-coral { background: var(--c-coral-light); color: var(--c-coral-border); }
 
     h1 {
       font-size: 26px;
@@ -150,12 +164,12 @@
 
     h2 {
       font-size: 17px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: -0.3px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .hero-desc {
@@ -164,41 +178,55 @@
       line-height: 1.6;
     }
 
-    /* Visual 5 Steps Bar */
+    /* 5 Steps Bar with 3-Color Logic */
     .steps-row {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
-      margin-top: 18px;
+      margin-top: 20px;
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 680px) {
       .steps-row {
         grid-template-columns: 1fr;
       }
     }
 
     .step-item {
-      background: #fafafa;
       border: 1.5px solid var(--card-border);
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 10px;
       box-shadow: 2px 2px 0px var(--shadow-color);
+      background: #ffffff;
     }
 
-    .step-item.highlight {
-      background: var(--yellow-sub);
+    .step-item.theme-blue {
+      background: var(--c-blue-light);
+      border-color: var(--card-border);
+    }
+    .step-item.theme-coral {
+      background: var(--c-coral-light);
+      border-color: var(--card-border);
+    }
+    .step-item.theme-yellow {
+      background: var(--c-yellow-light);
+      border-color: var(--card-border);
     }
 
     .step-tag {
       font-size: 10px;
-      font-weight: 800;
-      color: var(--text-muted);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
+
+    .theme-blue .step-tag { color: var(--c-blue-border); }
+    .theme-coral .step-tag { color: var(--c-coral-border); }
+    .theme-yellow .step-tag { color: var(--c-yellow-border); }
 
     .step-name {
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 900;
       color: var(--text-main);
       margin-top: 2px;
     }
@@ -210,12 +238,12 @@
       line-height: 1.3;
     }
 
-    /* Comparison Table Simple */
+    /* Comparison Table */
     .compare-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .compare-table th, .compare-table td {
@@ -224,27 +252,46 @@
       text-align: left;
     }
 
-    .compare-table th {
+    .compare-table th.th-epis {
       background: #f4f4f5;
-      font-weight: 800;
-      font-size: 12px;
+      font-weight: 900;
+      color: var(--text-muted);
+    }
+
+    .compare-table th.th-tepis {
+      background: var(--c-yellow);
+      font-weight: 900;
+      color: var(--card-border);
     }
 
     .compare-table td.tepis-cell {
-      background: #fefce8;
-      font-weight: 600;
+      background: var(--c-yellow-light);
+      font-weight: 700;
     }
 
-    /* Akronim Cards Grid */
+    /* Akronim Cards */
     .akronim-card {
-      background: #ffffff;
       border: 1.5px solid var(--card-border);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 16px;
       box-shadow: 3px 3px 0px var(--shadow-color);
       display: flex;
       flex-direction: column;
       gap: 8px;
+      background: #ffffff;
+    }
+
+    .akronim-card.theme-blue {
+      border-left: 6px solid var(--c-blue);
+      background: #fafbff;
+    }
+    .akronim-card.theme-coral {
+      border-left: 6px solid var(--c-coral);
+      background: var(--c-coral-light);
+    }
+    .akronim-card.theme-yellow {
+      border-left: 6px solid var(--c-yellow);
+      background: var(--c-yellow-light);
     }
 
     .akronim-header {
@@ -262,14 +309,18 @@
       align-items: center;
       justify-content: center;
       font-weight: 900;
-      font-size: 16px;
-      background: var(--yellow-main);
+      font-size: 15px;
+      color: #ffffff;
       box-shadow: 1.5px 1.5px 0px var(--shadow-color);
     }
 
+    .theme-blue .akronim-letter { background: var(--c-blue); }
+    .theme-coral .akronim-letter { background: var(--c-coral); }
+    .theme-yellow .akronim-letter { background: var(--c-yellow); color: var(--card-border); }
+
     .akronim-title {
       font-size: 15px;
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .akronim-sub {
@@ -285,8 +336,8 @@
     }
 
     .akronim-box-action {
-      background: #f4f4f5;
-      border: 1px solid var(--border);
+      background: #ffffff;
+      border: 1.5px solid var(--card-border);
       border-radius: 6px;
       padding: 8px 12px;
       font-size: 12px;
@@ -299,12 +350,12 @@
       margin-bottom: 2px;
     }
 
-    /* Case Study Simple Steps */
+    /* Case Study Layout */
     .case-flow {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     @media (max-width: 640px) {
@@ -318,25 +369,56 @@
       border-radius: 8px;
       padding: 12px 14px;
       font-size: 12px;
-      background: #ffffff;
       box-shadow: 2px 2px 0px var(--shadow-color);
+      background: var(--c-blue-light);
     }
 
     .case-box h4 {
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      color: var(--c-blue-border);
     }
 
-    /* PMI Simple Deck */
+    /* Stress Meter Grid */
+    .stress-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .stress-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .stress-level {
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 11px;
+      box-shadow: 2px 2px 0px var(--shadow-color);
+    }
+
+    .sl-normal { background: var(--c-blue-light); }
+    .sl-lag { background: var(--c-yellow-light); }
+    .sl-break { background: var(--c-coral-light); }
+    .sl-freeze { background: #fee2e2; }
+
+    .sl-title {
+      font-weight: 900;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    /* PMI 3 Cards (Blue, Coral, Yellow) */
     .pmi-row {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     @media (max-width: 640px) {
@@ -347,37 +429,52 @@
 
     .pmi-box {
       border: 1.5px solid var(--card-border);
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 12px;
       font-size: 12px;
-      box-shadow: 2px 2px 0px var(--shadow-color);
+      box-shadow: 2.5px 2.5px 0px var(--shadow-color);
     }
 
-    .pmi-box.plus { background: var(--green-light); }
-    .pmi-box.minus { background: var(--red-light); }
-    .pmi-box.interesting { background: var(--yellow-sub); }
+    .pmi-box.pmi-plus {
+      background: var(--c-blue-light);
+      color: var(--c-blue-border);
+    }
+    .pmi-box.pmi-minus {
+      background: var(--c-coral-light);
+      color: var(--c-coral-border);
+    }
+    .pmi-box.pmi-interesting {
+      background: var(--c-yellow-light);
+      color: var(--c-yellow-border);
+    }
 
     .pmi-title {
-      font-weight: 800;
+      font-weight: 900;
+      font-size: 13px;
       margin-bottom: 4px;
     }
 
-    /* Solution Box */
+    .pmi-text {
+      color: var(--text-main);
+    }
+
+    /* Hybrid Solution Banner */
     .solution-banner {
-      background: #f5f3ff;
-      border: 1.5px solid var(--card-border);
-      border-radius: 8px;
-      padding: 14px 16px;
+      background: var(--c-yellow-light);
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
       box-shadow: 3px 3px 0px var(--shadow-color);
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 13px;
     }
 
+    /* Rules List */
     .rule-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       font-size: 13px;
     }
 
@@ -385,24 +482,31 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
+      background: #ffffff;
+      border: 1.5px solid var(--card-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      box-shadow: 2px 2px 0px var(--shadow-color);
     }
 
     .rule-num {
-      width: 20px;
-      height: 20px;
-      background: var(--card-border);
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 800;
-      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 1.5px solid var(--card-border);
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      margin-top: 1px;
+      box-shadow: 1.5px 1.5px 0px var(--shadow-color);
     }
 
-    /* Simple Footer */
+    .rn-blue { background: var(--c-blue); color: #ffffff; }
+    .rn-coral { background: var(--c-coral); color: #ffffff; }
+    .rn-yellow { background: var(--c-yellow); color: var(--card-border); }
+
     footer {
       text-align: center;
       font-size: 12px;
@@ -413,7 +517,7 @@
 </head>
 <body>
 
-  <!-- Top Navbar (NAREKA Style) -->
+  <!-- Top Navbar -->
   <header class="nav">
     <div class="brand-group">
       <span class="brand-badge">NAREKA</span>
@@ -421,7 +525,7 @@
     </div>
     <div class="nav-links">
       <a href="#beda-epis" class="nav-pill">Beda EPIS</a>
-      <a href="#akronim" class="nav-pill">5 Fase</a>
+      <a href="#akronim" class="nav-pill">5 Fase TEPIS</a>
       <a href="#contoh" class="nav-pill">Contoh Nyata</a>
     </div>
   </header>
@@ -430,55 +534,56 @@
 
     <!-- Hero Card -->
     <section class="hero-card">
-      <span class="badge-label">Kerangka Riset Mandiri</span>
+      <span class="badge-label badge-yellow">Kerangka Riset Mandiri</span>
       <h1>TEPIS: Cara Memeras Kemampuan Alat Sampai Maksimal</h1>
       <p class="hero-desc">
         Pola berpikir sederhana: ambil satu alat, cek batas amannya, paksa bekerja sampai jebol, catat hasilnya, lalu kawinkan dengan alat lain agar jadi solusi yang tahan banting.
       </p>
 
-      <!-- 5 Langkah Praktis Strip -->
+      <!-- 5 Langkah Praktis Strip (3 Warna Konsisten) -->
       <div class="steps-row">
-        <div class="step-item">
-          <div class="step-tag">FASE 1</div>
-          <div class="step-name">[T] Things</div>
+        <div class="step-item theme-blue">
+          <div class="step-tag">[FASE 1]</div>
+          <div class="step-name">Things</div>
           <div class="step-sub">Pilih 1 alat tanpa termakan iklan.</div>
         </div>
-        <div class="step-item">
-          <div class="step-tag">FASE 2</div>
-          <div class="step-name">[E] Explore</div>
+        <div class="step-item theme-blue">
+          <div class="step-tag">[FASE 2]</div>
+          <div class="step-name">Explore</div>
           <div class="step-sub">Cari tahu batas wajarnya.</div>
         </div>
-        <div class="step-item highlight">
-          <div class="step-tag">FASE 3</div>
-          <div class="step-name">[P] Peak Stress</div>
-          <div class="step-sub">Uji beban ekstrem sampai rusak.</div>
+        <div class="step-item theme-coral">
+          <div class="step-tag">[FASE 3]</div>
+          <div class="step-name">Peak Stress</div>
+          <div class="step-sub">Uji beban berat sampai rusak.</div>
         </div>
-        <div class="step-item">
-          <div class="step-tag">FASE 4</div>
-          <div class="step-name">[I] Insight</div>
+        <div class="step-item theme-yellow">
+          <div class="step-tag">[FASE 4]</div>
+          <div class="step-name">Insight</div>
           <div class="step-sub">Catat plus, minus, & keunikannya.</div>
         </div>
-        <div class="step-item">
-          <div class="step-tag">FASE 5</div>
-          <div class="step-name">[S] Synthesis</div>
-          <div class="step-sub">Gabungkan 2 alat saling menambal.</div>
+        <div class="step-item theme-blue">
+          <div class="step-tag">[FASE 5]</div>
+          <div class="step-name">Synthesis</div>
+          <div class="step-sub">Gabung 2 alat saling menambal.</div>
         </div>
       </div>
     </section>
 
     <!-- 1. Perbedaan Singkat: EPIS vs TEPIS -->
     <section id="beda-epis" class="card">
+      <span class="badge-label badge-yellow">Latar Belakang</span>
       <h2>1. Dari Mana Asalnya? (Beda EPIS vs TEPIS)</h2>
       <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
-        EPIS asli dipakai di instansi pemerintah/kesehatan untuk melatih orang agar mau pakai sistem baru. TEPIS dimodifikasi untuk kita yang ingin memeras alat kerja sampai batas atas.
+        EPIS asli dipakai di instansi kantor agar orang mau pakai sistem baru. TEPIS dimodifikasi untuk kita yang ingin memeras alat kerja sampai batas atas.
       </p>
 
       <table class="compare-table">
         <thead>
           <tr>
-            <th>Bagian</th>
-            <th>EPIS Biasa (Gaya Kantor)</th>
-            <th>TEPIS (Gaya Eksperimen)</th>
+            <th style="background:#ffffff; width:22%;">Bagian</th>
+            <th class="th-epis" style="width:39%;">EPIS Biasa (Gaya Kantor)</th>
+            <th class="th-tepis" style="width:39%;">TEPIS (Gaya Eksperimen)</th>
           </tr>
         </thead>
         <tbody>
@@ -508,6 +613,7 @@
 
     <!-- 2. Penjelasan Singkat Akronim TEPIS -->
     <section id="akronim" class="card">
+      <span class="badge-label badge-blue">Bedah Inti Akronim</span>
       <h2>2. Penjelasan 5 Huruf TEPIS</h2>
       <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
         Gunakan 5 langkah ini secara berurutan pada alat apa pun:
@@ -516,12 +622,12 @@
       <div style="display:flex; flex-direction:column; gap:14px;">
 
         <!-- T -->
-        <div class="akronim-card">
+        <div class="akronim-card theme-blue">
           <div class="akronim-header">
             <div class="akronim-letter">T</div>
             <div>
-              <div class="akronim-title">Things (Pilih & Isolasi Alat)</div>
-              <div class="akronim-sub">Lihat fungsi murninya tanpa percaya klaim iklan</div>
+              <div class="akronim-title">[T] Things — Pilih & Isolasi Satu Alat</div>
+              <div class="akronim-sub">Lihat fungsi aslinya tanpa percaya klaim iklan</div>
             </div>
           </div>
           <div class="akronim-content">
@@ -533,11 +639,11 @@
         </div>
 
         <!-- E -->
-        <div class="akronim-card">
+        <div class="akronim-card theme-blue">
           <div class="akronim-header">
             <div class="akronim-letter">E</div>
             <div>
-              <div class="akronim-title">Exploration (Cek Batas Aman)</div>
+              <div class="akronim-title">[E] Exploration — Cek Batas Aman</div>
               <div class="akronim-sub">Ketahui kapan alat cocok dan kapan salah tempat</div>
             </div>
           </div>
@@ -550,11 +656,11 @@
         </div>
 
         <!-- P -->
-        <div class="akronim-card">
+        <div class="akronim-card theme-coral">
           <div class="akronim-header">
             <div class="akronim-letter">P</div>
             <div>
-              <div class="akronim-title">Peak Stress-Test (Paksa Sampai Rusak)</div>
+              <div class="akronim-title">[P] Peak Stress-Test — Paksa Sampai Rusak</div>
               <div class="akronim-sub">Uji sendiri tanpa bantuan alat lain</div>
             </div>
           </div>
@@ -567,11 +673,11 @@
         </div>
 
         <!-- I -->
-        <div class="akronim-card">
+        <div class="akronim-card theme-yellow">
           <div class="akronim-header">
             <div class="akronim-letter">I</div>
             <div>
-              <div class="akronim-title">Insight & PMI (Catat Hasil Uji)</div>
+              <div class="akronim-title">[I] Insight & PMI — Catat Hasil Uji</div>
               <div class="akronim-sub">Audit jujur: Plus, Minus, dan Hal Menarik</div>
             </div>
           </div>
@@ -589,11 +695,11 @@
         </div>
 
         <!-- S -->
-        <div class="akronim-card">
+        <div class="akronim-card theme-blue">
           <div class="akronim-header">
             <div class="akronim-letter">S</div>
             <div>
-              <div class="akronim-title">Synthesis (Kawin Silang 2 Alat)</div>
+              <div class="akronim-title">[S] Synthesis — Kawin Silang 2 Alat</div>
               <div class="akronim-sub">Jangan buang alatnya, tutupi kekurangannya</div>
             </div>
           </div>
@@ -610,6 +716,7 @@
 
     <!-- 3. Contoh Nyata yang Mudah Dipahami -->
     <section id="contoh" class="card">
+      <span class="badge-label badge-coral">Studi Kasus Lapangan</span>
       <h2>3. Contoh Nyata: Spreadsheet (Excel / Google Sheets)</h2>
       <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">
         Kasus umum: Excel atau Google Sheets yang sering dipaksa jadi pencatat stok dan transaksi toko.
@@ -627,35 +734,48 @@
       </div>
 
       <!-- Hasil Uji Beban P -->
-      <div style="margin-top:14px; border:1.5px solid var(--card-border); border-radius:8px; padding:12px; background:#fafafa;">
-        <div style="font-size:12px; font-weight:800; margin-bottom:6px;">[P] Hasil Dites Beban Berat:</div>
-        <ul style="font-size:12px; line-height:1.6; padding-left:16px; color:var(--text-main);">
-          <li><strong>4.000 baris:</strong> Masih lancar tanpa masalah (Batas aman).</li>
-          <li><strong>10.000 baris:</strong> Mulai lemot, ketik terasa ada jeda 2 detik.</li>
-          <li><strong>20.000 baris & 10 staf buka bareng:</strong> Lembar kerja macet, data saling timpa, rumus rusak (#REF!).</li>
-        </ul>
+      <div style="margin-top:14px;">
+        <div style="font-size:12px; font-weight:900; margin-bottom:4px;">[P] Hasil Dites Beban Berat:</div>
+        <div class="stress-grid">
+          <div class="stress-level sl-normal">
+            <div class="sl-title" style="color:var(--c-blue-border);">4.000 Baris</div>
+            <strong>Ceiling Aman:</strong> Masih sangat lancar tanpa kendala.
+          </div>
+          <div class="stress-level sl-lag">
+            <div class="sl-title" style="color:var(--c-yellow-border);">10.000 Baris</div>
+            <strong>Gejala Lemot:</strong> Ketik mulai ada jeda lag 2 detik.
+          </div>
+          <div class="stress-level sl-break">
+            <div class="sl-title" style="color:var(--c-coral-border);">20.000 Baris</div>
+            <strong>Breaking Point:</strong> Rumus rusak (#REF!), data saling tindih.
+          </div>
+          <div class="stress-level sl-freeze">
+            <div class="sl-title" style="color:#991b1b;">50.000 Baris</div>
+            <strong>Freeze Total:</strong> Lembar kerja macet dan gagal dibuka.
+          </div>
+        </div>
       </div>
 
-      <!-- Evaluasi PMI I -->
+      <!-- Evaluasi PMI I (3 Warna Konsisten) -->
       <div class="pmi-row">
-        <div class="pmi-box plus">
-          <div class="pmi-title text-green-700">[+] Plus</div>
-          Gratis, gampang dipakai semua staf, grafik laporan bisa dibuat cepat.
+        <div class="pmi-box pmi-plus">
+          <div class="pmi-title">[+] Plus</div>
+          <div class="pmi-text">Gratis, gampang dipakai semua staf, grafik laporan selesai cepat.</div>
         </div>
-        <div class="pmi-box minus">
-          <div class="pmi-title text-red-700">[-] Minus</div>
-          Rumus mudah terhapus staf lain, lemot kalau data banyak.
+        <div class="pmi-box pmi-minus">
+          <div class="pmi-title">[-] Minus</div>
+          <div class="pmi-text">Rumus mudah terhapus staf lain, lemot kalau data banyak.</div>
         </div>
-        <div class="pmi-box interesting">
-          <div class="pmi-title text-yellow-800">[?] Menarik</div>
-          Pivot Table otomatis bisa gantikan laporan mingguan tanpa ribet.
+        <div class="pmi-box pmi-interesting">
+          <div class="pmi-title">[?] Menarik</div>
+          <div class="pmi-text">Pivot Table otomatis bisa gantikan laporan mingguan tanpa koding.</div>
         </div>
       </div>
 
       <!-- Solusi Gabungan S -->
       <div class="solution-banner">
-        <div style="font-weight:800; font-size:13px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
-          <span>[S] Solusi Kawin Silang:</span>
+        <div style="font-weight:900; font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:8px;">
+          <span class="badge-label badge-yellow" style="margin-bottom:0; padding:2px 8px; font-size:11px;">[S] SOLUSI HIBRIDA</span>
           <span>Google Sheets + Formulir Digital (Google Forms)</span>
         </div>
         <p style="font-size:12px; color:var(--text-main); line-height:1.5;">
@@ -668,18 +788,19 @@
 
     <!-- 4. Prinsip Inti -->
     <section class="card">
+      <span class="badge-label badge-blue">Kaidah Dasar</span>
       <h2>4. Tiga Kaidah Singkat TEPIS</h2>
       <ul class="rule-list">
         <li class="rule-item">
-          <div class="rule-num">1</div>
+          <div class="rule-num rn-blue">1</div>
           <div><strong>Uji sendiri dulu:</strong> Jangan buru-buru gabungkan alat sebelum tahu kapan alat itu mulai ngelag.</div>
         </li>
         <li class="rule-item">
-          <div class="rule-num">2</div>
+          <div class="rule-num rn-coral">2</div>
           <div><strong>Minus bukan berarti jelek:</strong> Minus adalah petunjuk untuk mencari alat pasangan yang pas.</div>
         </li>
         <li class="rule-item">
-          <div class="rule-num">3</div>
+          <div class="rule-num rn-yellow">3</div>
           <div><strong>Gabung untuk menambal:</strong> Solusi terbaik bukan cari 1 alat dewa, tapi gabungkan 2 alat sederhana yang saling menutup celah.</div>
         </li>
       </ul>
