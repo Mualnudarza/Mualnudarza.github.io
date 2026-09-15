@@ -881,6 +881,70 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   [data-rv]{ opacity:1 !important; transform:none !important; }
   .mask-line > span,.word{ opacity:1 !important; transform:none !important; }
 }
+
+/* ============================================================= projects portal sidebar */
+.portal-backdrop{
+  position:fixed; inset:0; z-index:900; background:rgba(3,6,9,.65);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  opacity:0; pointer-events:none; transition:opacity .4s var(--ease-out);
+}
+.portal-backdrop.is-open{ opacity:1; pointer-events:auto; }
+
+.portal-sidebar{
+  position:fixed; top:0; right:0; bottom:0; z-index:950;
+  width:min(440px, 92vw); background:#0a0e12; border-left:1px solid var(--line);
+  box-shadow:-16px 0 48px rgba(0,0,0,.6); display:flex; flex-direction:column;
+  transform:translate3d(100%,0,0); transition:transform .45s var(--ease-out);
+}
+.portal-sidebar.is-open{ transform:translate3d(0,0,0); }
+
+.portal-header{
+  padding:24px 28px; border-bottom:1px solid var(--line-soft);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.portal-meta{ display:flex; flex-direction:column; gap:4px; }
+.portal-tag{ font-size:9px; letter-spacing:.28em; text-transform:uppercase; color:var(--vermilion); font-weight:600; }
+.portal-title{ font-size:15px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--bone); margin:0; }
+
+.portal-close{
+  width:36px; height:36px; border-radius:50%; border:1px solid var(--line-soft);
+  display:flex; align-items:center; justify-content:center; color:var(--bone-dim);
+  cursor:pointer; transition:all .3s ease; background:transparent;
+}
+.portal-close:hover{ border-color:var(--vermilion); color:#fff; transform:rotate(90deg); }
+.portal-close svg{ width:16px; height:16px; stroke:currentColor; stroke-width:1.8; fill:none; }
+
+.portal-body{ flex:1 1 auto; overflow-y:auto; padding:20px 24px; display:flex; flex-direction:column; gap:12px; }
+.portal-body::-webkit-scrollbar{ width:4px; }
+.portal-body::-webkit-scrollbar-thumb{ background:var(--line); border-radius:2px; }
+
+.portal-card{
+  display:block; padding:16px 18px; border-radius:6px;
+  background:rgba(223,231,224,.025); border:1px solid var(--line-soft);
+  text-decoration:none; color:inherit; transition:all .3s ease;
+}
+.portal-card:hover{
+  background:rgba(223,231,224,.06); border-color:var(--line);
+  transform:translate3d(-4px,0,0);
+}
+.portal-card-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; gap:8px; }
+.portal-card-tag{ font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
+.portal-card-arrow{ color:var(--vermilion); transition:transform .3s; font-size:14px; }
+.portal-card:hover .portal-card-arrow{ transform:translate3d(3px,0,0); }
+.portal-card-title{ font-size:14px; font-weight:500; line-height:1.4; color:var(--bone); margin:0; }
+.portal-card-file{ font-size:10px; color:var(--muted); font-family:monospace; margin-top:6px; word-break:break-all; }
+
+.portal-empty{
+  padding:48px 20px; text-align:center; color:var(--muted); font-size:13px;
+  border:1px dashed var(--line-soft); border-radius:6px;
+}
+.portal-empty span{ display:block; font-size:24px; margin-bottom:8px; }
+
+.portal-footer{
+  padding:16px 28px; border-top:1px solid var(--line-soft);
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted);
+  display:flex; justify-content:space-between; align-items:center;
+}
 </style>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -890,6 +954,30 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 <div id="vignette"></div>
 <div id="grain"></div>
 <div class="cur-dot" id="cursor"></div>
+
+<!-- ============================================================ projects portal sidebar -->
+<div class="portal-backdrop" id="portal-backdrop"></div>
+<aside class="portal-sidebar" id="portal-sidebar" aria-label="Projects Portal">
+  <div class="portal-header">
+    <div class="portal-meta">
+      <span class="portal-tag">Project Portal</span>
+      <h2 class="portal-title">Available Projects</h2>
+    </div>
+    <button class="portal-close" id="portal-close" aria-label="Close portal">
+      <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="portal-body" id="portal-list">
+    <div class="portal-empty">
+      <span>📂</span>
+      Loading projects...
+    </div>
+  </div>
+  <div class="portal-footer">
+    <span>Directory: /projects</span>
+    <span id="portal-count">0 items</span>
+  </div>
+</aside>
 
 <!-- ============================================================ preloader -->
 <div id="pre">
@@ -4341,6 +4429,84 @@ function wireNav() {
   const dots = $$('#rail button');
   const links = $$('.nav-link');
   const burger = $('.nav-burger');
+
+  /* Projects Portal logic */
+  const portalBackdrop = $('#portal-backdrop');
+  const portalSidebar = $('#portal-sidebar');
+  const portalClose = $('#portal-close');
+  const portalList = $('#portal-list');
+  const portalCount = $('#portal-count');
+
+  let portalLoaded = false;
+  async function loadProjects() {
+    try {
+      // Look up projects-list.json relative to host root or base path
+      const res = await fetch('../projects-list.json').catch(() => fetch('/NAREKA/projects-list.json'));
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data = await res.json();
+      renderProjects(data);
+    } catch (e) {
+      try {
+        const fallbackRes = await fetch('/NAREKA/projects-list.json');
+        const data = await fallbackRes.json();
+        renderProjects(data);
+      } catch (err) {
+        portalList.innerHTML = `
+          <div class="portal-empty">
+            <span>⚠️</span>
+            Belum ada file HTML terdeteksi di direktori <code>projects/</code>
+          </div>`;
+        portalCount.textContent = '0 items';
+      }
+    }
+  }
+
+  function renderProjects(items) {
+    if (!items || !items.length) {
+      portalList.innerHTML = `
+        <div class="portal-empty">
+          <span>📂</span>
+          Tidak ada dokumen proyek yang ditemukan.
+        </div>`;
+      portalCount.textContent = '0 items';
+      return;
+    }
+    portalCount.textContent = `${items.length} ${items.length === 1 ? 'project' : 'projects'}`;
+    portalList.innerHTML = items.map(item => {
+      // Resolve path against deployment root
+      const href = `../${item.url}`;
+      return `
+        <a class="portal-card" href="${href}" target="_blank" rel="noopener noreferrer">
+          <div class="portal-card-head">
+            <span class="portal-card-tag">HTML Document</span>
+            <span class="portal-card-arrow">↗</span>
+          </div>
+          <h3 class="portal-card-title">${item.title || item.file}</h3>
+          <div class="portal-card-file">${item.file}</div>
+        </a>
+      `;
+    }).join('');
+  }
+
+  function openPortal() {
+    portalBackdrop.classList.add('is-open');
+    portalSidebar.classList.add('is-open');
+    document.documentElement.classList.add('nav-open');
+    if (!portalLoaded) {
+      loadProjects();
+      portalLoaded = true;
+    }
+  }
+
+  function closePortal() {
+    portalBackdrop.classList.remove('is-open');
+    portalSidebar.classList.remove('is-open');
+    document.documentElement.classList.remove('nav-open');
+  }
+
+  portalBackdrop?.addEventListener('click', closePortal);
+  portalClose?.addEventListener('click', closePortal);
+
   const closeMenu = () => {
     nav.classList.remove('menu-open');
     burger.classList.remove('active');
@@ -4356,14 +4522,18 @@ function wireNav() {
     burger.setAttribute('aria-expanded', String(open));
     document.documentElement.classList.toggle('nav-open', open);
   };
-  burger.setAttribute('aria-controls', 'navlinks');
+  burger.setAttribute('aria-controls', 'portal-sidebar');
   burger.setAttribute('aria-expanded', 'false');
   burger.addEventListener('click', () => {
-    if (vpW() > 820) return;
-    setMenu(!nav.classList.contains('menu-open'));
+    openPortal();
   });
   links.forEach(link => link.addEventListener('click', closeMenu));
-  addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeMenu();
+      closePortal();
+    }
+  });
   addEventListener('resize', () => { if (vpW() > 820) closeMenu(); }, { passive:true });
   /* Which chapter each link actually points at, read off its href. The old
      rule was positional — link i lit for section i+1 — which silently assumed
